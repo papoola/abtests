@@ -1,0 +1,37 @@
+@import '../vars.scss';
+
+.fedex-accordion {
+  border-top: 1px solid $color-gray;
+  padding: 0;
+  margin: 0;
+}
+
+.fedex-accordion-item {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid $color-gray;
+}
+
+.fedex-accordion-item__title {
+  position: relative;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 15px;
+
+  &::after {
+    color: black;
+    content: '▾';
+    pointer-events: none;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 20px;
+  }
+}
+
+.fedex-accordion-item__body {
+  background: $color-gray;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}

@@ -1,0 +1,128 @@
+@import 'vars.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+input[type='text'] {
+  background: red;
+}
+
+.fedex-input,
+.fedex-select {
+  position: relative;
+
+  > label {
+    position: absolute;
+    padding: 10px 0px 0px 10px;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  > select, input {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background: $color-gray;
+    border: none;
+    border-radius: 0;
+    padding: 30px 10px 10px 10px;
+    width: 100%;
+    font-size: 15px;
+    &:focus {
+      color: black;
+    }
+    // Hack for IE 11+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+
+}
+
+.fedex-select {
+
+  &::after {
+    color: black;
+    content: '▾';
+    pointer-events: none;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 20px;
+  }
+
+  > select {
+    cursor: pointer;
+  }
+
+}
+
+.fedex-flex {
+  display: flex;
+}
+
+.fedex-flex-1 {
+  flex: 1;
+}
+
+.fedex-items-center {
+  justify-content: center;
+}
+
+.fedex-hidden {
+  display: none;
+}
+
+.fedex-mt-10 {
+  margin-top: 10px;
+}
+
+.fedex-mt-20 {
+  margin-top: 20px;
+}
+
+.fedex-mr-20 {
+  margin-right: 20px;
+}
+
+.fedex-mr-30 {
+  margin-right: 30px;
+}
+
+.fedex-p-10 {
+  padding: 10px;
+}
+
+.fedex-pt-20 {
+  padding-top: 20px;
+}
+
+.fedex-pb-20 {
+  padding-bottom: 20px;
+}
+
+.fedex-py-10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.fedex-px-50 {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.fedex-bg-orange {
+  background: $color-orange;
+}
+
+.fedex-text-white {
+  color: $color-white;
+}
+
+.fedex-capitalize {
+  text-transform: capitalize;
+}
+
+.fedex-font-bold {
+  font-weight: bold;
+}

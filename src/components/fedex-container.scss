@@ -1,0 +1,24 @@
+@import '../vars.scss';
+
+.fedex-container {
+
+  width: 100%;
+  margin: auto;
+
+  @media (min-width: $breakpoint-sm) {
+    max-width: $breakpoint-sm;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    max-width: $breakpoint-md;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    max-width: $breakpoint-lg;
+  }
+
+  @media (min-width: $breakpoint-xl) {
+    max-width: $breakpoint-xl;
+  }
+
+}
