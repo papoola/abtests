@@ -20,6 +20,9 @@ export const fields = {
  */
 class FedexAbInfo extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -39,9 +42,13 @@ class FedexAbInfo extends HTMLElement {
         this.itemFieldsToRows = this.itemFieldsToRows.bind(this);
     }
 
-    connectedCallback () {
-    }
-
+    /**
+     * Generates table rows for A/B test fields of given type
+     *
+     * @function itemFieldsToRows
+     * @param {Object} item - A/B test object
+     * @param {string} type - fields type (generic|image|video|element)
+     */
     itemFieldsToRows (item, type) {
 
         // Use fields for type
@@ -61,10 +68,21 @@ class FedexAbInfo extends HTMLElement {
         return rows;
     }
 
+    /**
+     * Gets A/B test object
+     *
+     * @function get item
+     */
     get item () {
         return this._item;
     }
 
+    /**
+     * Sets A/B test object which we like to show
+     *
+     * @function set item
+     * @param {Object} value - A/B test object
+     */
     set item (value) {
         this._item = value;
         const table = this.shadowRoot.querySelector('table');

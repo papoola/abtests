@@ -16,6 +16,9 @@ template.innerHTML = `
  */
 class FedexSelect extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -40,18 +43,40 @@ class FedexSelect extends HTMLElement {
         this.checkValidity = this.checkValidity.bind(this);
     }
 
+    /**
+     * @connectedCallback
+     */
     connectedCallback () {
+
+        // Change handler
         this.selectElement.addEventListener('change', this.onChange);
     }
 
+    /**
+     * Gets selected value
+     *
+     * @function get value
+     */
     get value () {
         return this.selectElement.value;
     }
 
+    /**
+     * Sets selected value
+     *
+     * @function get value
+     * @param {string} value - selected value
+     */
     set value (value) {
         this.selectElement.value = value;
     }
 
+    /**
+     * Sets select items
+     *
+     * @function set items
+     * @param {string[]} items - select items
+     */
     set items (items) {
 
         // Clear options
@@ -75,11 +100,21 @@ class FedexSelect extends HTMLElement {
         });
     }
 
+    /**
+     * Dispatches event on select change
+     *
+     * @function onChange
+     */
     onChange () {
         const event = new Event('change');
         this.dispatchEvent(event);
     }
 
+    /**
+     * Checks if selection is valid, and reports the user in case of error
+     *
+     * @function checkValidity
+     */
     checkValidity () {
         const valid = this.selectElement.checkValidity();
         this.rootElement.classList.toggle('fedex-select--invalid', !valid);

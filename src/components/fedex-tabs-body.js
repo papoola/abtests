@@ -9,12 +9,15 @@ template.innerHTML = `
 `;
 
 /**
- * Represents body related to a tab item
+ * Represents body of a tab item
  *
  * @class FedexTabsBody
  */
 class FedexTabsBody extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -31,6 +34,9 @@ class FedexTabsBody extends HTMLElement {
         this.parentElement.parentElement.registerTab(this.tabId, 'body', this);
     }
 
+    /**
+     * @connectedCallback
+     */
     connectedCallback () {
 
         // Select tab on init
@@ -39,18 +45,34 @@ class FedexTabsBody extends HTMLElement {
         }
     }
 
+    /**
+     * Gets tab id
+     *
+     * @function get tabId
+     */
     get tabId () {
         return this.getAttribute('tab-id');
     }
 
+    /**
+     * Gets selected status
+     *
+     * @function get selected
+     */
     get selected () {
         return this.hasAttribute('selected');
     }
 
-    set selected (isSelected) {
-        this.toggleAttribute('selected', isSelected);
+    /**
+     * Sets selected status
+     *
+     * @function set selected
+     * @param {boolean} value - selected status
+     */
+    set selected (value) {
+        this.toggleAttribute('selected', value);
         const div = this.shadowRoot.querySelector('div');
-        div.classList.toggle('fedex-hidden', !isSelected);
+        div.classList.toggle('fedex-hidden', !value);
     }
 
 }

@@ -17,6 +17,9 @@ template.innerHTML = `
  */
 class FedexContainer extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor() {
         super();
 
@@ -28,9 +31,6 @@ class FedexContainer extends HTMLElement {
 
         // Render the template in the shadow dom
         this.shadowRoot.appendChild(template.content.cloneNode(true));
-    }
-
-    connectedCallback() {
     }
 
 }

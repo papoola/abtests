@@ -4,8 +4,8 @@ import {fields} from "./fedex-ab-info";
 const template = document.createElement('template');
 template.innerHTML = `
     <div class="fedex-ab-saved">
-        <div class="fedex-flex">
-            <div class="fedex-flex-1 fedex-mr-20">
+        <div class="fedex-flex fedex-flex-wrap fedex-flex-gap-15">
+            <div class="fedex-flex-1">
                 <div>
                     <fedex-select id="region" placeholder="choose the region to apply" required>Region</fedex-select>
                 </div>
@@ -24,7 +24,7 @@ template.innerHTML = `
                 </div>
             </div>
         </div>
-        <h1>Summary of filtered/saved A/B cases:</h1>
+        <h1 class="fedex-mt-40 fedex-font-normal fedex-text-gray-dark">Summary of filtered/saved A/B cases:</h1>
         <p id="caption"></p>
         <div class="fedex-mt-20">
             <fedex-accordion id="accordion"></fedex-accordion>
@@ -35,10 +35,13 @@ template.innerHTML = `
 /**
  * Shows list of all saved A/B tests
  *
- * @class FedexAbInfo
+ * @class FedexAbSaved
  */
 class FedexAbSaved extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -63,7 +66,7 @@ class FedexAbSaved extends HTMLElement {
 
         // Method binding
         this.loadRegions = this.loadRegions.bind(this);
-        this.load = this.load.bind(this);
+        this.loadTests = this.loadTests.bind(this);
         this.add = this.add.bind(this);
         this.clearFilters = this.clearFilters.bind(this);
         this.render = this.render.bind(this);
@@ -73,10 +76,13 @@ class FedexAbSaved extends HTMLElement {
         this.filter.type.items = ['image', 'video', 'element'];
         this.loadRegions();
 
-        // Load all saved items
-        this.load();
+        // Load all saved tests
+        this.loadTests();
     }
 
+    /**
+     * @connectedCallback
+     */
     connectedCallback () {
 
         // Click handlers
@@ -86,17 +92,33 @@ class FedexAbSaved extends HTMLElement {
         btnClearFilters.onclick = this.clearFilters;
     }
 
+    /**
+     * Loads regions from JSON file
+     *
+     * @function loadRegions
+     */
     async loadRegions () {
         const saved = await fetch('/regions.json');
         this.filter.region.items = await saved.json();
     }
 
-    async load () {
+    /**
+     * Loads tests from JSON file
+     *
+     * @function loadTests
+     */
+    async loadTests () {
         const saved = await fetch('/saved.json');
         this.items = await saved.json();
         this.render();
     }
 
+    /**
+     * Adds A/B test to the list
+     *
+     * @function add
+     * @param {Object} item - A/B test object
+     */
     add (item) {
 
         // Generate ID
@@ -106,6 +128,11 @@ class FedexAbSaved extends HTMLElement {
         this.items.push(item);
     }
 
+    /**
+     * Clears all selected filters
+     *
+     * @function clearFilters
+     */
     clearFilters () {
         this.filter.region.value = '';
         this.filter.type.value = null;
@@ -113,6 +140,11 @@ class FedexAbSaved extends HTMLElement {
         this.render();
     }
 
+    /**
+     * Gets filter values as an object
+     *
+     * @function getFilters
+     */
     getFilters () {
         const filters = {
             region: this.filter.region.value,
@@ -122,6 +154,12 @@ class FedexAbSaved extends HTMLElement {
         return filters;
     }
 
+    /**
+     * Sets caption text based on filter values
+     *
+     * @function setCaption
+     * @param {Object} filters - filter values object
+     */
     setCaption (filters) {
         let caption = '';
         if (filters.region || filters.type || filters.status) {
@@ -140,20 +178,31 @@ class FedexAbSaved extends HTMLElement {
         this.caption.innerHTML = caption;
     }
 
+    /**
+     * Renders A/B test items based on the current filters
+     *
+     * @function render
+     */
     render () {
 
+        // Get filter values
         const filters = this.getFilters();
 
         // Set caption
         this.setCaption(filters);
 
-        // Populate accordion
+        // Clear accordion
         this.accordion.innerHTML = '';
+
+        // Filter items based on the current filters
         this.items.filter(item => (
             (!filters.region || item.region === filters.region) &&
             (!filters.type || item.type === filters.type) &&
             (!filters.status || item.status === filters.status)
-        )).forEach(item => {
+        )).
+
+        // Populate accordion
+        forEach(item => {
             const element = document.createElement('fedex-accordion-item');
             element.innerHTML = `
                 <span slot="title">A/B Case ${item.id}</span>

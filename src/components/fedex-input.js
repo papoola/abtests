@@ -15,6 +15,9 @@ template.innerHTML = `
  */
 class FedexInput extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor() {
         super();
 
@@ -42,21 +45,40 @@ class FedexInput extends HTMLElement {
         this.checkValidity = this.checkValidity.bind(this);
     }
 
-    connectedCallback() {
-    }
-
+    /**
+     * Gets input value
+     *
+     * @function get value
+     */
     get value () {
         return this.inputElement.value;
     }
 
+    /**
+     * Sets input value
+     *
+     * @function set value
+     * @param {string} value - new input value
+     */
     set value (value) {
         this.inputElement.value = value;
     }
 
+    /**
+     * Sets regex pattern for validation
+     *
+     * @function set pattern
+     * @param {string} value - regex pattern
+     */
     set pattern (value) {
         this.inputElement.pattern = value;
     }
 
+    /**
+     * Checks if the given input is valid, and reports the user in case of error
+     *
+     * @function checkValidity
+     */
     checkValidity () {
         const valid = this.inputElement.checkValidity();
         this.rootElement.classList.toggle('fedex-input--invalid', !valid);

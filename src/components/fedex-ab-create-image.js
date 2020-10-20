@@ -1,9 +1,13 @@
+/**
+ * Sub Template for A/B create screen > Image
+ */
+
 const template = document.createElement('template');
 template.innerHTML = `
     <div class="fedex-ab-create__image fedex-hidden">
         <label>Image Case:</label>
-        <div class="fedex-flex fedex-mt-20">
-            <div class="fedex-flex-1 fedex-mr-20">
+        <div class="fedex-flex fedex-flex-wrap fedex-flex-gap-15 fedex-mt-20">
+            <div class="fedex-flex-1">
                 <div>
                     <fedex-input id="image_text" required>Image text</fedex-input>
                 </div>

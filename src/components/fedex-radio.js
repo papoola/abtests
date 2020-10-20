@@ -4,7 +4,7 @@ const template = document.createElement('template');
 template.innerHTML = `
     <div class="fedex-radio">
         <label><slot></slot></label>
-        <div class="fedex-radio__items fedex-flex fedex-mt-10"></div>
+        <div class="fedex-radio__items fedex-flex fedex-flex-wrap fedex-flex-gap-15 fedex-mt-10"></div>
     </div>
 `;
 
@@ -15,6 +15,9 @@ template.innerHTML = `
  */
 class FedexRadio extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -36,15 +39,23 @@ class FedexRadio extends HTMLElement {
         this.checkValidity = this.checkValidity.bind(this);
     }
 
-    connectedCallback () {
-    }
-
+    /**
+     * Gets selected value
+     *
+     * @function get value
+     */
     get value () {
         const input = this.itemsElement.querySelector('input:checked');
         const value = (input) ? input.value : null;
         return value;
     }
 
+    /**
+     * Sets selected value
+     *
+     * @function get value
+     * @param {string} value - selected value
+     */
     set value (value) {
         if (value) {
             const input = this.itemsElement.querySelector(`input[value="${value}"]`);
@@ -59,6 +70,12 @@ class FedexRadio extends HTMLElement {
         }
     }
 
+    /**
+     * Sets radio items
+     *
+     * @function set items
+     * @param {string[]} items - radio items
+     */
     set items (items) {
         this.itemsElement.innerHTML = '';
         items.forEach((item,i) => {
@@ -67,17 +84,26 @@ class FedexRadio extends HTMLElement {
                 <input type="radio" id="radio_${i}" name="radio" value="${item}" required>
                 <label for="radio_${i}" class="fedex-capitalize">${item}</label>
             `;
-            div.classList.add('fedex-mr-30');
             this.itemsElement.appendChild(div);
             div.querySelector('input').addEventListener('change', this.onChange);
         });
     }
 
+    /**
+     * Dispatches event on radio change
+     *
+     * @function onChange
+     */
     onChange () {
         const event = new Event('change');
         this.dispatchEvent(event);
     }
 
+    /**
+     * Checks if selection is valid, and reports the user in case of error
+     *
+     * @function checkValidity
+     */
     checkValidity () {
         const firstItem = this.itemsElement.querySelector('input');
         const valid = firstItem.checkValidity();

@@ -18,6 +18,9 @@ template.innerHTML = `
  */
 class FedexAccordion extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -37,9 +40,12 @@ class FedexAccordion extends HTMLElement {
         this.selectItem = this.selectItem.bind(this);
     }
 
-    connectedCallback () {
-    }
-
+    /**
+     * Collapse / Fold given accordion item
+     *
+     * @function selectItem
+     * @param {Object} item - accordion item
+     */
     selectItem (item) {
 
         // If item is already collapsed, fold it

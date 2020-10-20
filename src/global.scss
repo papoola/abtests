@@ -15,7 +15,7 @@ input[type='text'] {
   > label {
     position: absolute;
     padding: 10px 0px 0px 10px;
-    font-size: 12px;
+    font-size: 10px;
     text-transform: uppercase;
   }
 
@@ -75,8 +75,16 @@ input[type='text'] {
   display: flex;
 }
 
+.fedex-flex-wrap {
+  flex-wrap: wrap;
+}
+
 .fedex-flex-1 {
-  flex: 1;
+  flex: 1 0 300px;
+}
+
+.fedex-flex-gap-15 {
+  gap: 15px;
 }
 
 .fedex-justify-center {
@@ -99,12 +107,8 @@ input[type='text'] {
   margin-top: 20px;
 }
 
-.fedex-mr-20 {
-  margin-right: 20px;
-}
-
-.fedex-mr-30 {
-  margin-right: 30px;
+.fedex-mt-40 {
+  margin-top: 40px;
 }
 
 .fedex-p-10 {
@@ -155,6 +159,10 @@ input[type='text'] {
   color: $color-orange;
 }
 
+.fedex-text-gray-dark {
+  color: $color-gray-dark;
+}
+
 .fedex-border-orange {
   border-color: $color-orange;
 }
@@ -169,6 +177,10 @@ input[type='text'] {
 
 .fedex-capitalize {
   text-transform: capitalize;
+}
+
+.fedex-font-normal {
+  font-weight: normal;
 }
 
 .fedex-font-bold {

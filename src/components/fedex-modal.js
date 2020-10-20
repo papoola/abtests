@@ -19,6 +19,9 @@ template.innerHTML = `
  */
 class FedexModal extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -38,13 +41,20 @@ class FedexModal extends HTMLElement {
         this.show = this.show.bind(this);
     }
 
-    connectedCallback() {
-    }
-
+    /**
+     * Shows modal dialog
+     *
+     * @function show
+     */
     show () {
         this.rootElement.classList.remove('fedex-hidden');
     }
 
+    /**
+     * Hides modal dialog
+     *
+     * @function hide
+     */
     hide () {
         this.rootElement.classList.add('fedex-hidden');
     }

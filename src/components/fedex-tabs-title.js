@@ -9,12 +9,15 @@ template.innerHTML = `
 `;
 
 /**
- * Represents title related to a tab item
+ * Represents title of a tab item
  *
  * @class FedexTabsBody
  */
 class FedexTabsTitle extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor() {
         super();
 
@@ -34,6 +37,9 @@ class FedexTabsTitle extends HTMLElement {
         this.parentElement.parentElement.registerTab(this.tabId, 'title', this);
     }
 
+    /**
+     * @connectedCallback
+     */
     connectedCallback () {
 
         // Click handler

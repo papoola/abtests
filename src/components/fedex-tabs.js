@@ -21,6 +21,9 @@ template.innerHTML = `
  */
 class FedexTabs extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -42,9 +45,14 @@ class FedexTabs extends HTMLElement {
         this.selectTab = this.selectTab.bind(this);
     }
 
-    connectedCallback () {
-    }
-
+    /**
+     * Registers a tab - This method is automatically called by the child elements (<tab-title/> and <tab-body/>)
+     *
+     * @function registerTab
+     * @param {string} id - tab id
+     * @param {string} type - tab type (title|body)
+     * @param {HTMLElement} element - tab element
+     */
     registerTab (id, type, element) {
         if (!this.tabs[id]) {
             this.tabs[id] = {}
@@ -52,6 +60,12 @@ class FedexTabs extends HTMLElement {
         this.tabs[id][type] = element;
     }
 
+    /**
+     * Selects a tab
+     *
+     * @function selectTab
+     * @param {string} id - tab id
+     */
     selectTab (id) {
 
         // If tab is already selected, don't do anything

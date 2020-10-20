@@ -14,6 +14,9 @@ template.innerHTML = `
  */
 class FedexButton extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor() {
         super();
 
@@ -33,9 +36,6 @@ class FedexButton extends HTMLElement {
         } else {
             button.className += ' fedex-bg-white fedex-text-orange fedex-border-1 fedex-border-orange';
         }
-    }
-
-    connectedCallback() {
     }
 
 }

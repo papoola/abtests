@@ -8,8 +8,8 @@ const template = document.createElement('template');
 template.innerHTML = `
     <div class="fedex-ab-create">
         <label>Create a new A/B case:</label>
-        <div class="fedex-flex fedex-mt-20">
-            <div class="fedex-flex-1 fedex-mr-20">
+        <div class="fedex-flex fedex-flex-wrap fedex-flex-gap-15 fedex-mt-20">
+            <div class="fedex-flex-1">
                 <div>
                     <fedex-input id="name" required>Name</fedex-input>
                 </div>
@@ -44,7 +44,7 @@ template.innerHTML = `
 `;
 
 /**
- * Show form for creating a new A/B test
+ * Shows form for creating a new A/B test
  *
  * @class FedexAbCreate
  */
@@ -91,7 +91,7 @@ class FedexAbCreate extends HTMLElement {
         // Method binding
         this.loadRegions = this.loadRegions.bind(this);
         this.toggleTypeFields = this.toggleTypeFields.bind(this);
-        this.toggleElementField = this.toggleElementField.bind(this);
+        this.toggleElementFields = this.toggleElementFields.bind(this);
         this.save = this.save.bind(this);
         this.modify = this.modify.bind(this);
         this.getFieldsForType = this.getFieldsForType.bind(this);
@@ -111,7 +111,7 @@ class FedexAbCreate extends HTMLElement {
     }
 
     /**
-     * constructor
+     * @connectedCallback
      */
     connectedCallback () {
 
@@ -130,11 +130,21 @@ class FedexAbCreate extends HTMLElement {
         btnSubmit.onclick = this.submit;
     }
 
+    /**
+     * Loads regions from JSON file
+     *
+     * @function loadRegions
+     */
     async loadRegions () {
         const saved = await fetch('/regions.json');
         this.input.region.items = await saved.json();
     }
 
+    /**
+     * Toggles type specific fields based on selected type
+     *
+     * @function toggleTypeFields
+     */
     toggleTypeFields () {
         const prevElement = this.shadowRoot.querySelector('.fedex-ab-create__type > div:not(.fedex-hidden)');
         if (prevElement) {
@@ -143,12 +153,22 @@ class FedexAbCreate extends HTMLElement {
         this.shadowRoot.querySelector(`.fedex-ab-create__type > div.fedex-ab-create__${this.input.type.value}`).classList.remove('fedex-hidden');
     }
 
-    toggleElementField () {
+    /**
+     * Toggles element specific fields based on selected element
+     *
+     * @function toggleElementFields
+     */
+    toggleElementFields () {
         const element = this.input.element_element.value;
         this.input.element_link.classList.toggle('fedex-hidden', element !== 'link');
         this.input.element_category.classList.toggle('fedex-hidden', element !== 'button');
     }
 
+    /**
+     * Validates and shows the modal screen to ask for confirmation
+     *
+     * @function save
+     */
     save () {
 
         // Validate
@@ -162,12 +182,22 @@ class FedexAbCreate extends HTMLElement {
         }
     }
 
+    /**
+     * Cancels the confirmation modal screen, and gets user back to form
+     *
+     * @function modify
+     */
     modify () {
 
         // Hide modal
         this.modal.hide();
     }
 
+    /**
+     * Cancels the confirmation modal screen
+     *
+     * @function modify
+     */
     getFieldsForType (type) {
 
         // Use fields for type
@@ -185,6 +215,11 @@ class FedexAbCreate extends HTMLElement {
         return useFields;
     }
 
+    /**
+     * Validates the input fields
+     *
+     * @function checkValidity
+     */
     checkValidity () {
 
         // Validate generic fields
@@ -211,6 +246,11 @@ class FedexAbCreate extends HTMLElement {
         return true;
     }
 
+    /**
+     * Collects the input field values
+     *
+     * @function collectInput
+     */
     collectInput () {
         const abtest = {};
 
@@ -229,6 +269,11 @@ class FedexAbCreate extends HTMLElement {
         return abtest;
     }
 
+    /**
+     * Adds the entered data to the list of the saved A/B tests
+     *
+     * @function submit
+     */
     submit () {
 
         // Add to saved A/B tests

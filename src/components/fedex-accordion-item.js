@@ -16,6 +16,9 @@ template.innerHTML = `
  */
 class FedexAccordionItem extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
 
@@ -32,6 +35,9 @@ class FedexAccordionItem extends HTMLElement {
         this.onClicked = this.onClicked.bind(this);
     }
 
+    /**
+     * @connectedCallback
+     */
     connectedCallback () {
 
         // Click handler
@@ -39,23 +45,39 @@ class FedexAccordionItem extends HTMLElement {
         li.onclick = this.onClicked;
     }
 
+    /**
+     * Collapse / Fold given accordion item
+     *
+     * @function onClicked
+     * @param {Object} item - accordion item
+     */
     onClicked () {
         this.parentElement.selectItem(this);
     }
 
+    /**
+     * Gets selected status
+     *
+     * @function get selected
+     */
     get selected () {
         return this.hasAttribute('selected');
     }
 
-    set selected (isSelected) {
-        this.toggleAttribute('selected', isSelected);
+    /**
+     * Sets selected status
+     *
+     * @function set selected
+     * @param {boolean} value - selected status
+     */
+    set selected (value) {
+        this.toggleAttribute('selected', value);
         const body = this.shadowRoot.querySelector('.fedex-accordion-item__body');
-        if (isSelected) {
+        if (value) {
             body.style.maxHeight = body.scrollHeight + "px";
         } else {
             body.style.maxHeight = null;
         }
-        // body.classList.toggle('fedex-p0', !isSelected);
     }
 
 }
