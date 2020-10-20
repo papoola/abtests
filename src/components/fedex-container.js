@@ -18,6 +18,15 @@ template.innerHTML = `
 class FedexContainer extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-container';
+    }
+
+    /**
      * @constructor
      */
     constructor() {
@@ -35,6 +44,6 @@ class FedexContainer extends HTMLElement {
 
 }
 
-customElements.define('fedex-container', FedexContainer);
+customElements.define(FedexContainer.tag, FedexContainer);
 
 export default FedexContainer;

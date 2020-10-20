@@ -19,6 +19,15 @@ template.innerHTML = `
 class FedexAccordion extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-accordion';
+    }
+
+    /**
      * @constructor
      */
     constructor () {
@@ -67,6 +76,6 @@ class FedexAccordion extends HTMLElement {
 
 }
 
-customElements.define('fedex-accordion', FedexAccordion);
+customElements.define(FedexAccordion.tag, FedexAccordion);
 
 export default FedexAccordion;

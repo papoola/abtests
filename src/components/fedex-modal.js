@@ -20,6 +20,15 @@ template.innerHTML = `
 class FedexModal extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-modal';
+    }
+
+    /**
      * @constructor
      */
     constructor () {
@@ -61,6 +70,6 @@ class FedexModal extends HTMLElement {
 
 }
 
-customElements.define('fedex-modal', FedexModal);
+customElements.define(FedexModal.tag, FedexModal);
 
 export default FedexModal;

@@ -2,7 +2,7 @@
 
 .fedex-container {
 
-  width: 100%;
+  width: calc(100% - 20px);
   margin: auto;
   color: $color-black;
   font-family: Arial, Helvetica, sans-serif;

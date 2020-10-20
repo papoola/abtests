@@ -18,12 +18,18 @@
   padding: 10px;
 
   &::after {
-    content: '▾';
+    content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcUlEQVRYhe3OywmAMBRE0buxADFahGA3YjeCLSrYgnW4cSEifvJMAjJnP9wBERG5Vxm2OZBZ4jWwAI3HtgBGoLMcAGg9TrgtPljjPic+j785ESz+5IQDppDxqxNlrPjZiejx44k5RXx/ok8VFxGRf1gBuFwW0WqnxDkAAAAASUVORK5CYII=);
     pointer-events: none;
     position: absolute;
     right: 10px;
     top: 5px;
     font-size: 20px;
+  }
+}
+
+.fedex-accordion-item--selected {
+  .fedex-accordion-item__title::after {
+    content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcUlEQVRYhe3OywmAMBBF0bswBYgt2ItVCWIfVuCnFkty40AWQYhJDMg7y4HhPhARkTQOaGvGD+AEulrxFZi/HuHHm/s2fTUiFDfFR1h8C8SLj7D4/hAvNiImnn2EH3eRv1lG9MDyIm5GYEgZICIi/3cBSzwWoIHb8GkAAAAASUVORK5CYII=);
   }
 }
 

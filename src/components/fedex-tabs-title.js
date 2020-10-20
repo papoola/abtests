@@ -16,6 +16,15 @@ template.innerHTML = `
 class FedexTabsTitle extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-tabs-title';
+    }
+
+    /**
      * @constructor
      */
     constructor() {
@@ -67,6 +76,6 @@ class FedexTabsTitle extends HTMLElement {
 
 }
 
-customElements.define('fedex-tabs-title', FedexTabsTitle);
+customElements.define(FedexTabsTitle.tag, FedexTabsTitle);
 
 export default FedexTabsTitle;

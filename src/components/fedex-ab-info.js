@@ -1,7 +1,11 @@
-import globalCss from '../global';
-
 const template = document.createElement('template');
 template.innerHTML = `
+    <style>
+        .fedex-capitalize { text-transform: capitalize; }
+        .fedex-font-bold { font-weight: bold; }
+        .fedex-pt-20 { padding-top: 20px; }
+        .fedex-pb-20 { padding-bottom: 20px; }
+    </style>
     <table>
     </table>
 `;
@@ -21,6 +25,15 @@ export const fields = {
 class FedexAbInfo extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-ab-info';
+    }
+
+    /**
      * @constructor
      */
     constructor () {
@@ -30,7 +43,7 @@ class FedexAbInfo extends HTMLElement {
         this.attachShadow({ mode: 'open' });
 
         // Add CSS
-        this.shadowRoot.adoptedStyleSheets = [globalCss];
+        this.shadowRoot.adoptedStyleSheets = [];
 
         // Render the template in the shadow dom
         this.shadowRoot.appendChild(template.content.cloneNode(true));
@@ -95,6 +108,6 @@ class FedexAbInfo extends HTMLElement {
 
 }
 
-customElements.define('fedex-ab-info', FedexAbInfo);
+customElements.define(FedexAbInfo.tag, FedexAbInfo);
 
 export default FedexAbInfo;

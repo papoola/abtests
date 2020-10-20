@@ -17,6 +17,15 @@ template.innerHTML = `
 class FedexSelect extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-select';
+    }
+
+    /**
      * @constructor
      */
     constructor () {
@@ -68,7 +77,7 @@ class FedexSelect extends HTMLElement {
      * @param {string} value - selected value
      */
     set value (value) {
-        this.selectElement.value = value;
+        this.selectElement.value = (value) ? value : '';
     }
 
     /**
@@ -124,6 +133,6 @@ class FedexSelect extends HTMLElement {
 
 }
 
-customElements.define('fedex-select', FedexSelect);
+customElements.define(FedexSelect.tag, FedexSelect);
 
 export default FedexSelect;

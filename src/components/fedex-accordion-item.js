@@ -17,6 +17,15 @@ template.innerHTML = `
 class FedexAccordionItem extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-accordion-item';
+    }
+
+    /**
      * @constructor
      */
     constructor () {
@@ -31,6 +40,9 @@ class FedexAccordionItem extends HTMLElement {
         // Add CSS
         this.shadowRoot.adoptedStyleSheets = [globalCss, css];
 
+        // Attributes
+        this.rootElement = this.shadowRoot.querySelector('li');
+
         // Method binding
         this.onClicked = this.onClicked.bind(this);
     }
@@ -41,8 +53,7 @@ class FedexAccordionItem extends HTMLElement {
     connectedCallback () {
 
         // Click handler
-        const li = this.shadowRoot.querySelector('li');
-        li.onclick = this.onClicked;
+        this.rootElement.onclick = this.onClicked;
     }
 
     /**
@@ -72,6 +83,7 @@ class FedexAccordionItem extends HTMLElement {
      */
     set selected (value) {
         this.toggleAttribute('selected', value);
+        this.rootElement.classList.toggle('fedex-accordion-item--selected', value);
         const body = this.shadowRoot.querySelector('.fedex-accordion-item__body');
         if (value) {
             body.style.maxHeight = body.scrollHeight + "px";
@@ -82,6 +94,6 @@ class FedexAccordionItem extends HTMLElement {
 
 }
 
-customElements.define('fedex-accordion-item', FedexAccordionItem);
+customElements.define(FedexAccordionItem.tag, FedexAccordionItem);
 
 export default FedexAccordionItem;

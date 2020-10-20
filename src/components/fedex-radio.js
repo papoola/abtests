@@ -16,6 +16,15 @@ template.innerHTML = `
 class FedexRadio extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-radio';
+    }
+
+    /**
      * @constructor
      */
     constructor () {
@@ -33,6 +42,7 @@ class FedexRadio extends HTMLElement {
         // Attributes
         this.rootElement = this.shadowRoot.querySelector('.fedex-radio');
         this.itemsElement = this.shadowRoot.querySelector('.fedex-radio__items');
+        this.rootElement.classList.toggle('fedex-radio--checkbox', this.hasAttribute('checkbox'));
 
         // Method binding
         this.onChange = this.onChange.bind(this);
@@ -114,6 +124,6 @@ class FedexRadio extends HTMLElement {
 
 }
 
-customElements.define('fedex-radio', FedexRadio);
+customElements.define(FedexRadio.tag, FedexRadio);
 
 export default FedexRadio;

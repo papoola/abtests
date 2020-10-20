@@ -15,6 +15,15 @@ template.innerHTML = `
 class FedexButton extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-button';
+    }
+
+    /**
      * @constructor
      */
     constructor() {
@@ -40,6 +49,6 @@ class FedexButton extends HTMLElement {
 
 }
 
-customElements.define('fedex-button', FedexButton);
+customElements.define(FedexButton.tag, FedexButton);
 
 export default FedexButton;

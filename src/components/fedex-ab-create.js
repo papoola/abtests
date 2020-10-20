@@ -7,6 +7,7 @@ import { fields } from './fedex-ab-info';
 const template = document.createElement('template');
 template.innerHTML = `
     <div class="fedex-ab-create">
+        <form>
         <label>Create a new A/B case:</label>
         <div class="fedex-flex fedex-flex-wrap fedex-flex-gap-15 fedex-mt-20">
             <div class="fedex-flex-1">
@@ -22,7 +23,7 @@ template.innerHTML = `
                     <fedex-select id="region" placeholder="choose the region to apply" required>Region</fedex-select>
                 </div>
                 <div class="fedex-mt-20">
-                    <fedex-radio id="type" required>Choose the type:</fedex-radio>
+                    <fedex-radio id="type" checkbox required>Choose the type:</fedex-radio>
                 </div>
             </div>
         </div>
@@ -30,6 +31,7 @@ template.innerHTML = `
         <div class="fedex-flex fedex-justify-center fedex-mt-20">
             <fedex-button id="btn-save" cta>Save</fedex-button>
         </div>
+        </form>
         <fedex-modal id="modal">
             <h1>Summary of the case</h1>
             <div class="fedex-mt-20">
@@ -49,6 +51,15 @@ template.innerHTML = `
  * @class FedexAbCreate
  */
 class FedexAbCreate extends HTMLElement {
+
+    /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-ab-create';
+    }
 
     /**
      * @constructor
@@ -119,7 +130,7 @@ class FedexAbCreate extends HTMLElement {
         this.input.type.addEventListener('change', this.toggleTypeFields);
 
         // Element handler
-        this.input.element_element.addEventListener('change', this.toggleElementField);
+        this.input.element_element.addEventListener('change', this.toggleElementFields);
 
         // Click handlers
         const btnSave = this.shadowRoot.querySelector('#btn-save');
@@ -287,10 +298,13 @@ class FedexAbCreate extends HTMLElement {
 
         // Hide modal
         this.modal.hide();
+
+        // Reset create form
+        document.querySelector('#create').innerHTML = '<fedex-ab-create></fedex-ab-create>';
     }
 
 }
 
-customElements.define('fedex-ab-create', FedexAbCreate);
+customElements.define(FedexAbCreate.tag, FedexAbCreate);
 
 export default FedexAbCreate;

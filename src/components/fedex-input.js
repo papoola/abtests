@@ -16,6 +16,15 @@ template.innerHTML = `
 class FedexInput extends HTMLElement {
 
     /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-input';
+    }
+
+    /**
      * @constructor
      */
     constructor() {
@@ -88,6 +97,6 @@ class FedexInput extends HTMLElement {
 
 }
 
-customElements.define('fedex-input', FedexInput);
+customElements.define(FedexInput.tag, FedexInput);
 
 export default FedexInput;

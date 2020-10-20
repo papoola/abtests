@@ -7,19 +7,21 @@ template.innerHTML = `
         <div class="fedex-flex fedex-flex-wrap fedex-flex-gap-15">
             <div class="fedex-flex-1">
                 <div>
-                    <fedex-select id="region" placeholder="choose the region to apply" required>Region</fedex-select>
+                    <fedex-select id="region" placeholder="choose the region to apply">Region</fedex-select>
                 </div>
                 <div class="fedex-mt-20">
-                    <fedex-radio id="type" required>Choose the type:</fedex-radio>                    
+                    <fedex-radio id="type" checkbox>Choose the type:</fedex-radio>                    
                 </div>
             </div>
             <div class="fedex-flex-1">
                 <div>
-                    <fedex-radio id="status">Status:</fedex-radio>
+                    <fedex-radio id="status" checkbox>Status:</fedex-radio>
                 </div>
                 <div class="fedex-mt-20">
                     <div>&nbsp;</div>                    
-                    <fedex-button id="btn-filter" cta>Filter</fedex-button>
+                    <fedex-button id="btn-filter" cta>
+                        Filter
+                    </fedex-button>
                     <fedex-button id="btn-clear-filters">Clear filters</fedex-button>
                 </div>
             </div>
@@ -38,6 +40,15 @@ template.innerHTML = `
  * @class FedexAbSaved
  */
 class FedexAbSaved extends HTMLElement {
+
+    /**
+     * Gets component tag
+     *
+     * @function get tag
+     */
+    static get tag() {
+        return 'fedex-ab-saved';
+    }
 
     /**
      * @constructor
@@ -134,7 +145,7 @@ class FedexAbSaved extends HTMLElement {
      * @function clearFilters
      */
     clearFilters () {
-        this.filter.region.value = '';
+        this.filter.region.value = null;
         this.filter.type.value = null;
         this.filter.status.value = null;
         this.render();
@@ -215,6 +226,6 @@ class FedexAbSaved extends HTMLElement {
 
 }
 
-customElements.define('fedex-ab-saved', FedexAbSaved);
+customElements.define(FedexAbSaved.tag, FedexAbSaved);
 
 export default FedexAbSaved;
