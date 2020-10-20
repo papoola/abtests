@@ -8,6 +8,11 @@ template.innerHTML = `
     </li>
 `;
 
+/**
+ * Represents title related to a tab item
+ *
+ * @class FedexTabsBody
+ */
 class FedexTabsTitle extends HTMLElement {
 
     constructor() {
@@ -26,7 +31,7 @@ class FedexTabsTitle extends HTMLElement {
         this.onClicked = this.onClicked.bind(this);
 
         // Register tab title
-        this.parentElement.parentElement.registerTab(this.id, 'title', this);
+        this.parentElement.parentElement.registerTab(this.tabId, 'title', this);
     }
 
     connectedCallback () {
@@ -37,11 +42,11 @@ class FedexTabsTitle extends HTMLElement {
     }
 
     onClicked () {
-        this.parentElement.parentElement.selectTab(this.id);
+        this.parentElement.parentElement.selectTab(this.tabId);
     }
 
-    get id() {
-        return this.getAttribute('id');
+    get tabId() {
+        return this.getAttribute('tab-id');
     }
 
     get selected () {

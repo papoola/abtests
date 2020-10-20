@@ -10,6 +10,11 @@ template.innerHTML = `
     </div>    
 `;
 
+/**
+ * Root container element
+ *
+ * @class FedexContainer
+ */
 class FedexContainer extends HTMLElement {
 
     constructor() {

@@ -6,7 +6,7 @@ css.replaceSync(styles.toString());
 
 const template = document.createElement('template');
 template.innerHTML = `
-    <ul class="fedex-tabs fedex-flex fedex-items-center">
+    <ul class="fedex-tabs fedex-flex fedex-justify-center">
         <slot name="title"></slot>
     </ul>
     <div class="fedex-tabs-content">
@@ -14,9 +14,14 @@ template.innerHTML = `
     </div>
 `;
 
+/**
+ * Displays tabs
+ *
+ * @class FedexTabs
+ */
 class FedexTabs extends HTMLElement {
 
-    constructor() {
+    constructor () {
         super();
 
         // Attributes
@@ -37,17 +42,17 @@ class FedexTabs extends HTMLElement {
         this.selectTab = this.selectTab.bind(this);
     }
 
-    connectedCallback() {
+    connectedCallback () {
     }
 
-    registerTab(id, type, element) {
+    registerTab (id, type, element) {
         if (!this.tabs[id]) {
             this.tabs[id] = {}
         }
         this.tabs[id][type] = element;
     }
 
-    selectTab(id) {
+    selectTab (id) {
 
         // If tab is already selected, don't do anything
         if (id === this.selectedTabId) return;

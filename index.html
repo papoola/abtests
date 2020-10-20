@@ -5,21 +5,21 @@
 </head>
 <body>
     <fedex-container>
-        <fedex-tabs>
+        <fedex-tabs id="tabs">
             <div slot="title">
-                <fedex-tabs-title id="create">
+                <fedex-tabs-title tab-id="create">
                     Create a new A/B case
                 </fedex-tabs-title>
-                <fedex-tabs-title id="saved">
+                <fedex-tabs-title tab-id="saved">
                     Saved A/B Cases
                 </fedex-tabs-title>
             </div>
             <div slot="body">
-                <fedex-tabs-body id="create">
+                <fedex-tabs-body tab-id="create" selected>
                     <fedex-ab-create></fedex-ab-create>
                 </fedex-tabs-body>
-                <fedex-tabs-body id="saved" selected>
-                    <fedex-ab-saved></fedex-ab-saved>
+                <fedex-tabs-body tab-id="saved">
+                    <fedex-ab-saved id="saved"></fedex-ab-saved>
                 </fedex-tabs-body>
             </div>
         </fedex-tabs>

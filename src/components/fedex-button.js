@@ -2,11 +2,16 @@ import globalCss from '../global';
 
 const template = document.createElement('template');
 template.innerHTML = `
-    <button class="fedex-button fedex-py-10 fedex-px-50 fedex-bg-orange fedex-text-white">
+    <button class="fedex-button fedex-py-10 fedex-px-50">
         <slot></slot>
     </button>
 `;
 
+/**
+ * Displays a button
+ *
+ * @class FedexButton
+ */
 class FedexButton extends HTMLElement {
 
     constructor() {
@@ -20,6 +25,14 @@ class FedexButton extends HTMLElement {
 
         // Render the template in the shadow dom
         this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+        // Apply CTA / regular styling
+        const button = this.shadowRoot.querySelector('.fedex-button');
+        if (this.hasAttribute('cta')) {
+            button.className += ' fedex-bg-orange fedex-text-white fedex-border-1 fedex-border-orange';
+        } else {
+            button.className += ' fedex-bg-white fedex-text-orange fedex-border-1 fedex-border-orange';
+        }
     }
 
     connectedCallback() {

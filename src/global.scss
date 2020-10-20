@@ -29,11 +29,26 @@ input[type='text'] {
     width: 100%;
     font-size: 15px;
     &:focus {
-      color: black;
+      outline: 1px dotted $color-orange;
     }
     // Hack for IE 11+
     &::-ms-expand {
       display: none;
+    }
+  }
+
+  &.fedex-input--invalid,
+  &.fedex-select--invalid {
+
+    > label {
+      color: red;
+    }
+
+    > select, input {
+      outline: 2px solid red;
+      &:focus {
+        outline: 2px solid red;
+      }
     }
   }
 
@@ -42,7 +57,6 @@ input[type='text'] {
 .fedex-select {
 
   &::after {
-    color: black;
     content: '▾';
     pointer-events: none;
     position: absolute;
@@ -65,8 +79,12 @@ input[type='text'] {
   flex: 1;
 }
 
-.fedex-items-center {
+.fedex-justify-center {
   justify-content: center;
+}
+
+.fedex-justify-around {
+  justify-content: space-around;
 }
 
 .fedex-hidden {
@@ -106,9 +124,23 @@ input[type='text'] {
   padding-bottom: 10px;
 }
 
+.fedex-py-20 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.fedex-px-40 {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
 .fedex-px-50 {
   padding-left: 50px;
   padding-right: 50px;
+}
+
+.fedex-bg-white {
+  background: $color-white;
 }
 
 .fedex-bg-orange {
@@ -117,6 +149,22 @@ input[type='text'] {
 
 .fedex-text-white {
   color: $color-white;
+}
+
+.fedex-text-orange {
+  color: $color-orange;
+}
+
+.fedex-border-orange {
+  border-color: $color-orange;
+}
+
+.fedex-border-solid {
+  border-style: solid;
+}
+
+.fedex-border-1 {
+  border-width: 1px;
 }
 
 .fedex-capitalize {

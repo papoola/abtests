@@ -11,6 +11,11 @@ template.innerHTML = `
     </ul>    
 `;
 
+/**
+ * Displays an accordion
+ *
+ * @class FedexAccordion
+ */
 class FedexAccordion extends HTMLElement {
 
     constructor () {
@@ -35,7 +40,7 @@ class FedexAccordion extends HTMLElement {
     connectedCallback () {
     }
 
-    selectItem(item) {
+    selectItem (item) {
 
         // If item is already collapsed, fold it
         if (this.selectedItem === item) {

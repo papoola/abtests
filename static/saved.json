@@ -27,5 +27,6 @@
   "text": "I am a very sexy link",
   "element": "link",
   "link": "https://some/url/to/page.html",
+  "category": "",
   "target": "#element-c"
 }]

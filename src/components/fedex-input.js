@@ -8,6 +8,11 @@ template.innerHTML = `
     </div>
 `;
 
+/**
+ * Displays an input box
+ *
+ * @class FedexInput
+ */
 class FedexInput extends HTMLElement {
 
     constructor() {
@@ -21,14 +26,42 @@ class FedexInput extends HTMLElement {
 
         // Render the template in the shadow dom
         this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+        // Attributes
+        this.rootElement = this.shadowRoot.querySelector('.fedex-input');
+        this.inputElement = this.shadowRoot.querySelector('input');
+
+        // Set validation and title
+        this.inputElement.toggleAttribute('required', this.hasAttribute('required'));
+        const title = this.getAttribute('title');
+        if (title) {
+            this.inputElement.setAttribute('title', title);
+        }
+
+        // Method binding
+        this.checkValidity = this.checkValidity.bind(this);
     }
 
     connectedCallback() {
     }
 
-    get value() {
-        const input = this.shadowRoot.querySelector('input');
-        return input.value;
+    get value () {
+        return this.inputElement.value;
+    }
+
+    set value (value) {
+        this.inputElement.value = value;
+    }
+
+    set pattern (value) {
+        this.inputElement.pattern = value;
+    }
+
+    checkValidity () {
+        const valid = this.inputElement.checkValidity();
+        this.rootElement.classList.toggle('fedex-input--invalid', !valid);
+        this.inputElement.reportValidity();
+        return valid;
     }
 
 }

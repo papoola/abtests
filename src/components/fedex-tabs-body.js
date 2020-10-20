@@ -8,6 +8,11 @@ template.innerHTML = `
     </div>
 `;
 
+/**
+ * Represents body related to a tab item
+ *
+ * @class FedexTabsBody
+ */
 class FedexTabsBody extends HTMLElement {
 
     constructor () {
@@ -23,19 +28,19 @@ class FedexTabsBody extends HTMLElement {
         this.shadowRoot.adoptedStyleSheets = [globalCss, css];
 
         // Register tab body
-        this.parentElement.parentElement.registerTab(this.id, 'body', this);
+        this.parentElement.parentElement.registerTab(this.tabId, 'body', this);
     }
 
     connectedCallback () {
 
         // Select tab on init
         if (this.selected) {
-            this.parentElement.parentElement.selectTab(this.id);
+            this.parentElement.parentElement.selectTab(this.tabId);
         }
     }
 
-    get id () {
-        return this.getAttribute('id');
+    get tabId () {
+        return this.getAttribute('tab-id');
     }
 
     get selected () {

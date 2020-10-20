@@ -2,6 +2,7 @@ import globalCss from '../global';
 import template_image from './fedex-ab-create-image';
 import template_video from './fedex-ab-create-video';
 import template_element from './fedex-ab-create-element';
+import { fields } from './fedex-ab-info';
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -10,69 +11,50 @@ template.innerHTML = `
         <div class="fedex-flex fedex-mt-20">
             <div class="fedex-flex-1 fedex-mr-20">
                 <div>
-                    <fedex-input id="name">Name</fedex-input>
+                    <fedex-input id="name" required>Name</fedex-input>
                 </div>
                 <div class="fedex-mt-20">
-                    <label>Status:</label>
-                </div>
-                <div class="fedex-flex fedex-mt-10">
-                    <div class="fedex-mr-30">
-                        <input type="radio" id="active" name="active" value="true" checked>
-                        <label for="active">Active</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="inactive" name="active" value="false">
-                        <label for="inactive">Inactive</label>
-                    </div>
+                    <fedex-radio id="status">Status:</fedex-radio>
                 </div>
             </div>
             <div class="fedex-flex-1">
                 <div>
-                    <fedex-select>Region</fedex-select>
+                    <fedex-select id="region" placeholder="choose the region to apply" required>Region</fedex-select>
                 </div>
                 <div class="fedex-mt-20">
-                    <label>Choose the type:</label>
-                </div>
-                <div class="fedex-flex fedex-mt-10">
-                    <div class="fedex-mr-30">
-                        <input type="radio" id="type-image" name="type" value="image">
-                        <label for="type-image">Image</label>
-                    </div>
-                    <div class="fedex-mr-30">
-                        <input type="radio" id="type-video" name="type" value="video">
-                        <label for="type-video">Video</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="type-element" name="type" value="element">
-                        <label for="element">Element</label>
-                    </div>                    
+                    <fedex-radio id="type" required>Choose the type:</fedex-radio>
                 </div>
             </div>
         </div>
         <div class="fedex-ab-create__type fedex-pt-20"></div>
-        <div class="fedex-flex fedex-items-center fedex-mt-20">
-            <fedex-button id="save">Save</fedex-button>
+        <div class="fedex-flex fedex-justify-center fedex-mt-20">
+            <fedex-button id="btn-save" cta>Save</fedex-button>
         </div>
-        <fedex-modal>
+        <fedex-modal id="modal">
             <h1>Summary of the case</h1>
             <div class="fedex-mt-20">
-                <fedex-ab-info></fedex-ab-info>
+                <fedex-ab-info id="info"></fedex-ab-info>
             </div>            
-            <div class="fedex-flex fedex-items-center fedex-mt-20">
-                <fedex-button id="modify">Modify</fedex-button>
-                <fedex-button id="save">Save</fedex-button>
+            <div class="fedex-flex fedex-justify-around fedex-mt-20">
+                <fedex-button id="btn-modify">Modify</fedex-button>
+                <fedex-button id="btn-submit" cta>Submit</fedex-button>
             </div>
         </fedex-modal>
     </div>
 `;
 
+/**
+ * Show form for creating a new A/B test
+ *
+ * @class FedexAbCreate
+ */
 class FedexAbCreate extends HTMLElement {
 
+    /**
+     * @constructor
+     */
     constructor () {
         super();
-
-        // Attributes
-        this.type = '';
 
         // Add a shadow DOM
         this.attachShadow({ mode: 'open' });
@@ -89,47 +71,177 @@ class FedexAbCreate extends HTMLElement {
         typeContainer.appendChild(template_video.content.cloneNode(true));
         typeContainer.appendChild(template_element.content.cloneNode(true));
 
+        // Attributes
+        this.input = {}
+        fields.generic.forEach(field => {
+            this.input[field] = this.shadowRoot.querySelector(`#${field}`);
+        });
+        fields.image.forEach(field => {
+            this.input[`image_${field}`] = this.shadowRoot.querySelector(`#image_${field}`);
+        });
+        fields.video.forEach(field => {
+            this.input[`video_${field}`] = this.shadowRoot.querySelector(`#video_${field}`);
+        });
+        fields.element.forEach(field => {
+            this.input[`element_${field}`] = this.shadowRoot.querySelector(`#element_${field}`);
+        });
+        this.modal = this.shadowRoot.querySelector('#modal');
+        this.info = this.shadowRoot.querySelector('#info');
+
         // Method binding
-        this.toggleTypeElement = this.toggleTypeElement.bind(this);
+        this.loadRegions = this.loadRegions.bind(this);
+        this.toggleTypeFields = this.toggleTypeFields.bind(this);
+        this.toggleElementField = this.toggleElementField.bind(this);
         this.save = this.save.bind(this);
+        this.modify = this.modify.bind(this);
+        this.getFieldsForType = this.getFieldsForType.bind(this);
+        this.checkValidity = this.checkValidity.bind(this);
+        this.collectInput = this.collectInput.bind(this);
+        this.submit = this.submit.bind(this);
+
+        // Radio and select options
+        this.input.status.items = ['active', 'inactive'];
+        this.input.status.value = 'active';
+        this.input.type.items = ['image', 'video', 'element'];
+        this.input.image_format.items = ['.png', '.jpg'];
+        this.input.video_format.items = ['.mp4', '.mov'];
+        this.input.element_element.items = ['link', 'button'];
+        this.input.element_category.items = ['primary', 'secondary'];
+        this.loadRegions();
     }
 
+    /**
+     * constructor
+     */
     connectedCallback () {
 
         // Type handler
-        var radios = this.shadowRoot.querySelectorAll('input[type=radio][name="type"]');
-        const _this = this;
-        Array.prototype.forEach.call(radios, function (radio) {
-            radio.addEventListener('change', _this.toggleTypeElement);
-        });
+        this.input.type.addEventListener('change', this.toggleTypeFields);
 
-        // Click handler
-        const button = this.shadowRoot.querySelector('#save');
-        button.onclick = this.save;
+        // Element handler
+        this.input.element_element.addEventListener('change', this.toggleElementField);
 
-        console.log('FedexAbCreate connected');
+        // Click handlers
+        const btnSave = this.shadowRoot.querySelector('#btn-save');
+        btnSave.onclick = this.save;
+        const btnModify = this.shadowRoot.querySelector('#btn-modify');
+        btnModify.onclick = this.modify;
+        const btnSubmit = this.shadowRoot.querySelector('#btn-submit');
+        btnSubmit.onclick = this.submit;
     }
 
-    toggleTypeElement (event) {
+    async loadRegions () {
+        const saved = await fetch('/regions.json');
+        this.input.region.items = await saved.json();
+    }
 
-        // Get type
-        const radio = this.shadowRoot.querySelector('input[type=radio][name="type"]:checked');
-        this.type = radio.value;
-
-        // Toggle type element
+    toggleTypeFields () {
         const prevElement = this.shadowRoot.querySelector('.fedex-ab-create__type > div:not(.fedex-hidden)');
         if (prevElement) {
             prevElement.classList.add('fedex-hidden');
         }
-        this.shadowRoot.querySelector(`.fedex-ab-create__type > div.fedex-ab-create__${this.type}`).classList.remove('fedex-hidden');
+        this.shadowRoot.querySelector(`.fedex-ab-create__type > div.fedex-ab-create__${this.input.type.value}`).classList.remove('fedex-hidden');
+    }
+
+    toggleElementField () {
+        const element = this.input.element_element.value;
+        this.input.element_link.classList.toggle('fedex-hidden', element !== 'link');
+        this.input.element_category.classList.toggle('fedex-hidden', element !== 'button');
     }
 
     save () {
 
-        // Get values
-        const name = this.shadowRoot.querySelector('#name');
+        // Validate
+        if (this.checkValidity()) {
 
-        console.log('save', name.value);
+            // Collect input
+            this.info.item = this.collectInput();
+
+            // Show modal
+            this.modal.show();
+        }
+    }
+
+    modify () {
+
+        // Hide modal
+        this.modal.hide();
+    }
+
+    getFieldsForType (type) {
+
+        // Use fields for type
+        let useFields = (type) ? fields[type] : [];
+
+        // Exclude category/link based on element
+        if (type === 'element') {
+            if (this.input.element_element.value === 'link') {
+                useFields = useFields.filter(field => field !== 'category');
+            } else {
+                useFields = useFields.filter(field => field !== 'link');
+            }
+        }
+
+        return useFields;
+    }
+
+    checkValidity () {
+
+        // Validate generic fields
+        let fields = this.getFieldsForType('generic');
+        for (let i in fields) {
+            const valid = this.input[fields[i]].checkValidity();
+            if (!valid) return false;
+        };
+
+        // Adjust source validation based on selected format
+        const type = this.input.type.value;
+        if (type === 'image' || type === 'video') {
+            const format = this.input[`${type}_format`].value;
+            this.input[`${type}_source`].pattern = `^.+${format}$`;
+        }
+
+        // Validate type specific fields
+        fields = this.getFieldsForType(type);
+        for (let i in fields) {
+            const valid = this.input[`${type}_${fields[i]}`].checkValidity();
+            if (!valid) return false;
+        };
+
+        return true;
+    }
+
+    collectInput () {
+        const abtest = {};
+
+        // Collect generic attributes
+        let fields = this.getFieldsForType('generic');
+        fields.forEach(field => {
+            abtest[field] = this.input[field].value;
+        });
+
+        // Collect type specific attributes
+        fields = this.getFieldsForType(abtest.type);
+        fields.forEach(field => {
+            abtest[field] = this.input[`${abtest.type}_${field}`].value;
+        });
+
+        return abtest;
+    }
+
+    submit () {
+
+        // Add to saved A/B tests
+        const saved = document.querySelector('#saved');
+        saved.add(this.info.item);
+        saved.clearFilters();
+
+        // Switch to tab saved
+        const tabs = document.querySelector('#tabs');
+        tabs.selectTab('saved');
+
+        // Hide modal
+        this.modal.hide();
     }
 
 }

@@ -14,7 +14,7 @@
   pointer-events: none;
   transition: all 0.3s;
 
-  &.fedex-modal--visible {
+  &:not(.fedex-hidden) {
     visibility: visible;
     opacity: 1;
     pointer-events: auto;

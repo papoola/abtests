@@ -5,10 +5,15 @@ const template = document.createElement('template');
 template.innerHTML = `
     <li class="fedex-accordion-item">
         <div class="fedex-accordion-item__title"><slot name="title"></slot></div>
-        <div class="fedex-accordion-item__body"><div class="fedex-p-10"><slot name="body"></slot></div></div>
+        <div class="fedex-accordion-item__body"><div class="fedex-py-20 fedex-px-40"><slot name="body"></slot></div></div>
     </li>
 `;
 
+/**
+ * Represents an accordion item
+ *
+ * @class FedexAccordionItem
+ */
 class FedexAccordionItem extends HTMLElement {
 
     constructor () {

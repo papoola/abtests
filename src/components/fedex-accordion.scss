@@ -19,7 +19,6 @@
   font-size: 15px;
 
   &::after {
-    color: black;
     content: '▾';
     pointer-events: none;
     position: absolute;
